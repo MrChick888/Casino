@@ -7,13 +7,14 @@ using namespace std;
 void menu();
 void p_c();
 void menu2();
-int draw();
-
+void chance();
+void how_much();
 int main()
 {
 	int navigator=0,navigator_2=0,credits=50,random, credits_now=0;
 	string game_name,player_name;
 	char end_option, color, wl_option;
+	bool while1end = false, while2end = false;
 	while (1)
 	{
 		menu();
@@ -22,7 +23,7 @@ int main()
 		switch (navigator)
 		{
 		case 1:
-			while (1)
+			while (while1end==false)
 			{
 				cout << "WELCOME IN C++ CASINO." << endl;
 				cout << "Enter your name: ";
@@ -49,7 +50,7 @@ int main()
 					cout << i;
 				}
 				srand(time(NULL));
-				random = rand() % 45 + 1;
+				random = rand() % 100 + 1;
 				if (random >= 1 && random <= 48 && (color == 'R' || color == 'r'))
 				{
 					system("cls");
@@ -136,43 +137,26 @@ int main()
 				}
 			}
 		case 2:
-			menu2();
-			while (1)
+			while (while2end==false)
 			{
+				menu2();
 				cin >> navigator_2;
 				system("cls");
-				if (navigator_2 == 1)
+				switch (navigator_2)
 				{
-					cout << "==========" << endl;
-					cout << "==CHANCE==" << endl;
-					cout << "==========" << endl;
-					cout << "If you bet on RED, you have 48,5% chance to win. Tickets - (1-48) "<< endl;
-					cout << "If you bet on GREEN, you have 3% chance to win. Tickets - (49-51)" << endl;
-					cout << "If you bet on BLACK, you have 48,5% chance to win(52-100" << endl;
-					p_c();break;
-				}
-				if (navigator_2 == 2)
-				{
-					cout << "======================" << endl;
-					cout << "==HOW MUCH I CAN WIN==" << endl;
-					cout << "======================" << endl;
-					cout << "If you bet on RED, you can win 2 times more." << endl;
-					cout << "If you bet on GREEN, you can win 14 times more." << endl;
-					cout << "If you bet on BLACK, you can win 2 times more." << endl;
-					p_c(); break;
-				}
-				if (navigator_2 == 3)
-				{
+				case 1:
+					chance(); p_c(); while2end = true; break;
+				case 2:
+					how_much(); p_c(); while2end = true; break;
+				case 3:
 					cout << "So, let's go back to the main menu." << endl;
-					p_c();break;
-				}
-				else 
-				{
+					p_c(); while2end = true; break;
+				default:
 					cout << "THIS OPTION DOESN'T EXIST!" << endl;
 					cout << "Try one more time." << endl;
 					p_c();
 				}
-			}break;
+			}while2end = false; break;
 		case 3:
 			while (1)
 			{
@@ -203,7 +187,6 @@ int main()
 			p_c(); break;
 		}
 	}
-	
 	system("PAUSE");
 }
 void menu()
@@ -230,10 +213,21 @@ void menu2()
 	cout << "3.Go back to menu." << endl;
 	cout << "Enter: ";
 }
-int draw()
+void chance()
 {
-	srand(time(NULL));;
-	int random;
-	random = rand() % 100 + 1;
-	return random; 
+cout << "==========" << endl;
+cout << "==CHANCE==" << endl;
+cout << "==========" << endl;
+cout << "If you bet on RED, you have 48,5% chance to win. Tickets - (1-48) " << endl;
+cout << "If you bet on GREEN, you have 3% chance to win. Tickets - (49-51)" << endl;
+cout << "If you bet on BLACK, you have 48,5% chance to win. Tickets - (52-100)" << endl;
+}
+void how_much()
+{
+	cout << "======================" << endl;
+	cout << "==HOW MUCH I CAN WIN==" << endl;
+	cout << "======================" << endl;
+	cout << "If you bet on RED, you can win 2 times more." << endl;
+	cout << "If you bet on GREEN, you can win 14 times more." << endl;
+	cout << "If you bet on BLACK, you can win 2 times more." << endl;
 }
