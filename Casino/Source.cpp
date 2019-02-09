@@ -235,5 +235,5 @@ int draw()
 	srand(time(NULL));;
 	int random;
 	random = rand() % 100 + 1;
-	return random;
+	return random; 
 }
