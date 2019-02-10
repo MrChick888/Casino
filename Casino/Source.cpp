@@ -13,7 +13,7 @@ void how_much();
 
 int main()
 {
-	int navigator = 0, navigator_2 = 0, credits = 50, random, credits_now = 0;
+	int navigator = 0, navigator_2 = 0, credits = 50, random, credits_now = 0,i=0;
 	string game_name,player_name,content;
 	char end_option, color;
 	bool whileend = false;
@@ -217,8 +217,9 @@ int main()
 				{
 					while (!game_save.eof())
 					{
+						i++;
 						getline(game_save, content);
-						cout << content;
+						cout << endl << "[" << i << "]" << content;
 					}
 				}
 				else
