@@ -52,7 +52,7 @@ int main()
 					system("cls");
 					cout << i;
 				}
-				srand(time(NULL));//losowanie
+				srand(time(NULL));//losowanie xd
 				random = rand() % 100 + 1;
 				if (random >= 1 && random <= 48 && (color == 'R' || color == 'r'))
 				{
