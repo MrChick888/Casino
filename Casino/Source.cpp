@@ -13,12 +13,13 @@ void how_much();
 
 int main()
 {
-	int navigator = 0, navigator_2 = 0, credits = 50, random, credits_now = 0,i=0;
-	string game_name,player_name,content;
-	char end_option, color;
+	int navigator = 0, navigator_2 = 0, credits = 50, random, credits_now = 0, color = 0, save = 0,c = 0;
+	string game_name, player_name;
+	char end_option;
 	bool whileend = false;
 	fstream game_save;
-
+	string Save[3], Nick[3], Credits[3];
+	
 	while (1)
 	{
 		menu();
@@ -34,7 +35,10 @@ int main()
 				cout << "Good luck and have fun " << player_name << "." << endl;
 				cout << "Your credits: " << credits << endl;
 				cout << "Let's start the game!" << endl;
-				cout << player_name << " choose color (Red/Green/Black): ";
+				cout << player_name << " choose color : " << endl;
+				cout << "1.RED" << endl;
+				cout << "2.GREEN" << endl;
+				cout << "3.BLUE" << endl;
 				cin >> color;
 				cout << "How many credits do you want to play? ";
 				cin >> credits_now;
@@ -48,13 +52,13 @@ int main()
 				cout << "The drawing machine begins the countdown." << endl;
 				for (int i = 10; i > -2; i--)
 				{
-					_sleep(10);
+					_sleep(10);//1000
 					system("cls");
 					cout << i;
 				}
-				srand(time(NULL));//losowanie xd
+				srand(time(NULL));//losowanie
 				random = rand() % 100 + 1;
-				if (random >= 1 && random <= 48 && (color == 'R' || color == 'r'))
+				if (random >= 1 && random <= 48 && color == 1)
 				{
 					system("cls");
 					cout << "YOU WON!, Well played " << player_name << "." << endl;
@@ -77,7 +81,7 @@ int main()
 					game_save.close();
 					break;
 				}
-				if (random >= 1 && random <= 48 && (color != 'R' || color != 'r'))
+				if (random >= 1 && random <= 48 && color != 1)
 				{
 					system("cls");
 					cout << "YOU LOST! Correct color is Red. You must try one more time " << player_name << "." << endl;
@@ -105,7 +109,7 @@ int main()
 					}
 					break;
 				}
-				if (random >= 49 && random <= 51 && (color == 'G' || color == 'g'))
+				if (random >= 49 && random <= 51 && color == 2)
 				{
 					system("cls");
 					cout << "YOU WON!, Well played " << player_name << "." << endl;
@@ -128,7 +132,7 @@ int main()
 					game_save.close();
 					break;
 				}
-				if (random >= 49 && random <= 51 && (color != 'G' || color != 'g'))
+				if (random >= 49 && random <= 51 && color != 2)
 				{
 					system("cls");
 					cout << "YOU LOST! Correct color is Green. You must try one more time " << player_name << "." << endl;
@@ -156,7 +160,7 @@ int main()
 					}
 					break;
 				}
-				if (random >= 52 && random <= 100 && (color == 'B' || color == 'b'))
+				if (random >= 52 && random <= 100 && color == 3)
 				{
 					system("cls");
 					cout << "YOU WON!, Well played " << player_name << "." << endl;
@@ -180,7 +184,7 @@ int main()
 					game_save.close();
 					break;
 				}
-				if (random >= 52 && random <= 100 && (color != 'B' || color != 'b'))
+				if (random >= 52 && random <= 100 && color != 3)
 				{
 					system("cls");
 					cout << "YOU LOST! Correct color is Black. You must try one more time " << player_name << "." << endl;
@@ -211,24 +215,26 @@ int main()
 		}break;
 		case 2:
 				cout << "WELCOME IN C++ CASINO AGAIN!" << endl;
-				cout << "Select which save do you want to play: ";
+				cout << "Your save's: " << endl;
 				game_save.open("save.txt",ios::in);
 				if (game_save.good() == true)
 				{
+					int i = 0, h = 0;
 					while (!game_save.eof())
 					{
+						getline(game_save, Save[h]);
+						cout <<"["<<i+1<<"]"<< Save[h] << endl;
+						getline(game_save, Nick[i]);
+						getline(game_save, Credits[i]);
 						i++;
-						getline(game_save, content);
-						cout << endl << "[" << i << "]" << content;
+						h++;
 					}
 				}
-				else
-				{
-
-				}
+				cout << "Select which save do you want to play: ";
+				cin >> save;
 				break;
 
-				
+
 		case 3:
 			while (whileend==false)
 			{
