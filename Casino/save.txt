@@ -4,3 +4,12 @@ XDDD
 SAVVE
 NAME
 47
+save1
+Peter
+48
+save3
+pETER
+40
+SAVE
+PIT
+0

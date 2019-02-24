@@ -2,293 +2,43 @@
 #include <string>
 #include <ctime>
 #include <fstream>
+#include <windows.h>
 
 using namespace std;
 
-void menu();
+void main_menu(int& main_menu_navigator);
+void menu_option1(string& player_name, int& credits, int& color, int& credits_played, int& random_number);
+void conditions_color_option1(string player_name, int& variable);
+void conditions_credits_option1(string player_name, int credits, int& credits_played);
+void draw_option1(int& random_number);
+void conditions_result_option1(string player_name, int& credits, int credits_played, int color, int random_number);
+void win_option1(string player_name, int& credits, int credits_played, int multiplier);
+void lose_option1(string player_name, int& credits, int credits_played, string correct_color);
 void p_c();
-void menu2();
-void chance();
-void how_much();
 
 int main()
 {
-	int navigator = 0, navigator_2 = 0, credits = 50, random, credits_now = 0, color = 0, save = 0,c = 0;
-	string game_name, player_name;
-	char end_option;
-	bool whileend = false;
-	fstream game_save;
-	string Save[3], Nick[3], Credits[3];
-	
+	int main_menu_navigator, credits, color, credits_played = 0, random_number;
+	string player_name;
 	while (1)
 	{
-		menu();
-		cin >> navigator;
-		system("cls");
-		credits = 50;
-		switch (navigator)
+		main_menu(main_menu_navigator);
+		switch (main_menu_navigator)
 		{
 		case 1:
-				cout << "WELCOME IN C++ CASINO." << endl;
-				cout << "Enter your name: ";
-				cin >> player_name;
-				cout << "Good luck and have fun " << player_name << "." << endl;
-				cout << "Your credits: " << credits << endl;
-				cout << "Let's start the game!" << endl;
-				cout << player_name << " choose color : " << endl;
-				cout << "1.RED" << endl;
-				cout << "2.GREEN" << endl;
-				cout << "3.BLUE" << endl;
-				cin >> color;
-				cout << "How many credits do you want to play? ";
-				cin >> credits_now;
-				while (credits < credits_now || credits_now < 0)
-				{
-					system("cls");
-					cout << player_name << " you have only " << credits << " credits! You can't play for " << credits_now << "!" << endl;
-					cout << "How many credits do you want to play? " << endl;
-					cin >> credits_now;
-				}
-				cout << "The drawing machine begins the countdown." << endl;
-				for (int i = 10; i > -2; i--)
-				{
-					_sleep(10);//1000
-					system("cls");
-					cout << i;
-				}
-				srand(time(NULL));//losowanie
-				random = rand() % 100 + 1;
-				if (random >= 1 && random <= 48 && color == 1)
-				{
-					system("cls");
-					cout << "YOU WON!, Well played " << player_name << "." << endl;
-					cout << "You won " << credits_now * 2 << "." << endl;
-					credits += credits_now * 2;
-					cout << "Your credits: " << credits << endl;					
-					game_save.open("save.txt", ios::in | ios::out | ios::app);
-					if (game_save.good() == true)
-					{
-						cout << "Save you game. Enter game name: ";
-						cin >> game_name;
-						game_save << game_name << endl << player_name << endl << credits << endl;
-					}
-					else
-					{
-						cout << "Program can't find save file :(";
-						system("PAUSE");
-						exit(0);
-					}
-					game_save.close();
-					break;
-				}
-				if (random >= 1 && random <= 48 && color != 1)
-				{
-					system("cls");
-					cout << "YOU LOST! Correct color is Red. You must try one more time " << player_name << "." << endl;
-					credits = credits - credits_now;
-					cout << "Your credits: " << credits << endl;;		
-					game_save.open("save.txt", ios::in | ios::out | ios::app);
-					if (game_save.good() == true)
-					{
-						cout << "Save you game. Enter game name: ";
-						cin >> game_name;
-						game_save << game_name << endl << player_name << endl << credits << endl;
-					}
-					else
-					{
-						cout << "Program can't find save file :(";
-						system("PAUSE");
-						exit(0);
-					}
-					game_save.close();
-					if (credits_now < 0)
-					{
-						cout << "You lose this game :(" << endl;
-						system("PAUSE");
-						exit(0);
-					}
-					break;
-				}
-				if (random >= 49 && random <= 51 && color == 2)
-				{
-					system("cls");
-					cout << "YOU WON!, Well played " << player_name << "." << endl;
-					cout << "You won " << credits_now * 14 << "." << endl;
-					credits += credits_now * 14;
-					cout << "Your credits: " << credits << endl;					
-					game_save.open("save.txt", ios::in | ios::out | ios::app);
-					if (game_save.good() == true)
-					{
-						cout << "Save you game. Enter game name: ";
-						cin >> game_name;
-						game_save << game_name << endl << player_name << endl << credits << endl;
-					}
-					else
-					{
-						cout << "Program can't find save file :(";
-						system("PAUSE");
-						exit(0);
-					}
-					game_save.close();
-					break;
-				}
-				if (random >= 49 && random <= 51 && color != 2)
-				{
-					system("cls");
-					cout << "YOU LOST! Correct color is Green. You must try one more time " << player_name << "." << endl;
-					credits = credits - credits_now;
-					cout << "Your credits: " << credits << endl;
-					game_save.open("save.txt", ios::in | ios::out | ios::app);
-					if (game_save.good() == true)
-					{
-						cout << "Save you game. Enter game name: ";
-						cin >> game_name;
-						game_save << game_name << endl << player_name << endl << credits << endl;
-					}
-					else
-					{
-						cout << "Program can't find save file :(";
-						system("PAUSE");
-						exit(0);
-					}
-					game_save.close();
-					if (credits_now < 0)
-					{
-						cout << "You lose this game :(" << endl;
-						system("PAUSE");
-						exit(0);
-					}
-					break;
-				}
-				if (random >= 52 && random <= 100 && color == 3)
-				{
-					system("cls");
-					cout << "YOU WON!, Well played " << player_name << "." << endl;
-					cout << "You won " << credits_now * 2 << "." << endl;
-					credits += credits_now * 2;
-					cout << "Your credits: " << credits << endl;
-					game_save.open("save.txt", ios::in | ios::out | ios::app);
-					if (game_save.good() == true)
-					{
-						cout << "Save you game. Enter game name: ";
-						cin >> game_name;
-						game_save << game_name << endl << player_name << endl << credits << endl;
-						break;
-					}
-					else
-					{
-						cout << "Program can't find save file :(";
-						system("PAUSE");
-						exit(0);
-					}
-					game_save.close();
-					break;
-				}
-				if (random >= 52 && random <= 100 && color != 3)
-				{
-					system("cls");
-					cout << "YOU LOST! Correct color is Black. You must try one more time " << player_name << "." << endl;
-					credits = credits - credits_now;
-					cout << "Your credits: " << credits << endl;
-					game_save.open("save.txt", ios::in | ios::out | ios::app);
-					if (game_save.good() == true)
-					{
-						cout << "Save you game. Enter game name: ";
-						cin >> game_name;
-						game_save << game_name << endl << player_name << endl << credits << endl;
-						break;
-					}
-					else
-					{
-						cout << "Program can't find save file :(";
-						system("PAUSE");
-						exit(0);
-					}
-					game_save.close();
-					if (credits_now < 0)
-					{
-						cout << "You lose this game :(" << endl;
-						system("PAUSE");
-						exit(0);
-					}
-					break;
-		}break;
+			menu_option1(player_name, credits, color, credits_played, random_number);
+			break;
 		case 2:
-				cout << "WELCOME IN C++ CASINO AGAIN!" << endl;
-				cout << "Your save's: " << endl;
-				game_save.open("save.txt",ios::in);
-				if (game_save.good() == true)
-				{
-					int i = 0, h = 0;
-					while (!game_save.eof())
-					{
-						getline(game_save, Save[h]);
-						cout <<"["<<i+1<<"]"<< Save[h] << endl;
-						getline(game_save, Nick[i]);
-						getline(game_save, Credits[i]);
-						i++;
-						h++;
-					}
-				}
-				cout << "Select which save do you want to play: ";
-				cin >> save;
-				break;
-
-
+			//kod
 		case 3:
-			while (whileend==false)
-			{
-				menu2();
-				cin >> navigator_2;
-				system("cls");
-				switch (navigator_2)
-				{
-				case 1:
-					chance(); p_c(); whileend = true; break;
-				case 2:
-					how_much(); p_c(); whileend = true; break;
-				case 3:
-					cout << "So, let's go back to the main menu." << endl;
-					p_c(); whileend = true; break;
-				default:
-					cout << "THIS OPTION DOESN'T EXIST!" << endl;
-					cout << "Try one more time." << endl;
-					p_c();
-				}
-			}whileend = false; break;
-		case 4:
-			while (1)
-			{
-				cout << "DO YOU REALLY WANT TO LEAVE THE CASINO?" << endl;
-				cout << "Choose Y/N: ";
-				cin >> end_option;
-				if (end_option == 'Y' || end_option == 'y')
-				{
-					cout << "SEE YOU SOON." << endl;
-					system("PAUSE");
-					exit(0);
-				}
-				if (end_option == 'N' || end_option == 'n')
-				{
-					cout << "So, let's go back to the main menu." << endl;
-					p_c();break;
-				}
-				else
-				{
-					cout << "THIS OPTION DOESN'T EXIST!" << endl;
-					cout << "Try one more time." << endl;
-					p_c();
-				}
-			}break;
-		default:
-			cout << "THIS OPTION DOESN'T EXIST!" << endl;
-			cout << "Try one more time." << endl;
-			p_c(); break;
+			//kod
+		default: break;
 		}
+
 	}
 	system("PAUSE");
 }
-void menu()
+void main_menu(int& main_menu_navigator)
 {
 	cout << "ROULETTE GAME" << endl;
 	cout << "=============" << endl;
@@ -299,35 +49,127 @@ void menu()
 	cout << "3.Rule section." << endl;
 	cout << "4.END." << endl;
 	cout << "Enter: ";
+	if (!(cin >> main_menu_navigator))
+	{
+		cout << "You can't enter anything other than a number here! " << endl;
+		cout << "Restart program and try again." << endl;
+		system("PAUSE");
+		exit(0);
+	}
+	system("cls");
+	return;
+}
+void menu_option1(string& player_name, int& credits, int& color, int& credits_played, int& random_number)
+{
+	credits = 50;
+	cout << "WELCOME IN C++ CASINO." << endl;
+	cout << "Enter your name: ";
+	cin >> player_name;
+	cout << "Good luck and have fun " << player_name << "." << endl;
+	cout << "Your credits: " << credits << endl;
+	cout << "Let's start the game!" << endl;
+	cout << player_name << " choose color : " << endl;
+	cout << "1.RED" << endl;
+	cout << "2.GREEN" << endl;
+	cout << "3.BLACK" << endl;
+	conditions_color_option1(player_name, color);
+	while (color < 1 || color>3)
+	{
+		system("cls");
+		cout << "This option dosn't exits!" << endl;
+		cout << player_name << " choose color : " << endl;
+		cout << "1.RED" << endl;
+		cout << "2.GREEN" << endl;
+		cout << "3.BLUE" << endl;
+		conditions_color_option1(player_name, color);
+	}
+	cout << "How many credits do you want to play? ";
+	conditions_color_option1(player_name, credits_played);
+	conditions_credits_option1(player_name, credits, credits_played);
+	draw_option1(random_number);
+	conditions_result_option1(player_name, credits, credits_played, color, random_number);
+
+	return;
+}
+void conditions_color_option1(string player_name, int& variable)
+{
+	if (!(cin >> variable))
+	{
+		cout << player_name << " you can't enter anything other than a number here! " << endl;
+		cout << "Restart program and try again." << endl;
+		system("PAUSE");
+		exit(0);
+	}
+}
+void conditions_credits_option1(string player_name, int credits, int& credits_played)
+{
+	while (credits < credits_played || credits_played <= 0)//mo¿na lepiej na dwa przypadki
+	{
+		system("cls");
+		cout << player_name << " you have only " << credits << " credits! You can't play for " << credits_played << "!" << endl;
+		cout << "How many credits do you want to play? " << endl;
+		conditions_color_option1(player_name, credits_played);
+	}
+}
+void draw_option1(int& random_number)
+{
+	system("cls");
+	cout << "The drawing machine begins the countdown." << endl;
+	for (int i = 5; i > -2; i--)
+	{
+		Sleep(1000);//1000
+		system("cls");
+		cout << i;
+	}
+	system("cls");
+	srand(time(NULL));
+	random_number = rand() % 9 + 1;//99+1
+}
+void conditions_result_option1(string player_name, int& credits, int credits_played, int color, int random_number)
+{
+	if (random_number >= 1 && random_number <= 48)
+	{
+		if (color == 1)win_option1(player_name, credits, credits_played, 2);
+		else lose_option1(player_name, credits, credits_played, "Red");
+	}
+	if (random_number >= 49 && random_number <= 51)
+	{
+		if (color == 2)win_option1(player_name, credits, credits_played, 14);
+		else lose_option1(player_name, credits, credits_played, "Green");
+	}
+	if (random_number >= 52 && random_number <= 99)
+	{
+		if (color == 3)win_option1(player_name, credits, credits_played, 2);
+		else lose_option1(player_name, credits, credits_played, "Black");
+	}
+}
+void win_option1(string player_name, int& credits, int credits_played, int multiplier)
+{
+	cout << "YOU WON!, Well played " << player_name << "." << endl;
+	cout << "You won " << credits_played * multiplier << "." << endl;
+	credits += (credits_played * multiplier) - credits_played;
+	cout << "Your credits: " << credits << endl;
+	p_c();
+	return;
+}
+void lose_option1(string player_name, int& credits, int credits_played, string correct_color)
+{
+	cout << "YOU LOST! Correct color is " << correct_color << " . You must try one more time " << player_name << "." << endl;
+	credits -= credits_played;
+	cout << "Your credits: " << credits << endl;
+	if (credits == 0)
+	{
+		cout << "You lose this game :(" << endl;
+		system("PAUSE");
+		exit(0);
+	}
+	p_c();
+	return;
 }
 void p_c()
 {
 	system("PAUSE");
 	system("cls");
 }
-void menu2()
-{
-	cout << "WELCOME IN RULE SECTION." << endl;
-	cout << "1.Chance to win." << endl;
-	cout << "2.How much I can win." << endl;
-	cout << "3.Go back to menu." << endl;
-	cout << "Enter: ";
-}
-void chance()
-{
-cout << "==========" << endl;
-cout << "==CHANCE==" << endl;
-cout << "==========" << endl;
-cout << "If you bet on RED, you have 48,5% chance to win. Tickets - (1-48) " << endl;
-cout << "If you bet on GREEN, you have 3% chance to win. Tickets - (49-51)" << endl;
-cout << "If you bet on BLACK, you have 48,5% chance to win. Tickets - (52-100)" << endl;
-}
-void how_much()
-{
-	cout << "======================" << endl;
-	cout << "==HOW MUCH I CAN WIN==" << endl;
-	cout << "======================" << endl;
-	cout << "If you bet on RED, you can win 2 times more." << endl;
-	cout << "If you bet on GREEN, you can win 14 times more." << endl;
-	cout << "If you bet on BLACK, you can win 2 times more." << endl;
-}
+//zapisy!
+
