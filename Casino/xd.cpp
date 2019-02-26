@@ -43,11 +43,11 @@
 //				cout << "How many credits do you want to play? ";
 //				cin >> credits_now;
 //TU
-
-
-
-
-
+//
+//
+//
+//
+//
 //				while (credits < credits_now || credits_now < 0)
 //				{
 //					system("cls");
@@ -55,26 +55,26 @@
 //					cout << "How many credits do you want to play? " << endl;
 //					cin >> credits_now;
 //				}
-
-
-
-
-				//cout << "The drawing machine begins the countdown." << endl;
-				//for (int i = 10; i > -2; i--)
-				//{
-				//	_sleep(1000);//1000
-				//	system("cls");
-				//	cout << i;
-				//}
-				//srand(time(NULL));//losowanie
-				//random = rand() % 100 + 1;
-
-
-
-
-
-
-
+//
+//
+//
+//
+//				cout << "The drawing machine begins the countdown." << endl;
+//				for (int i = 10; i > -2; i--)
+//				{
+//					_sleep(1000);//1000
+//					system("cls");
+//					cout << i;
+//				}
+//				srand(time(NULL));//losowanie
+//				random = rand() % 100 + 1;
+//
+//
+//
+//
+//
+//
+//
 //				if (random >= 1 && random <= 48 && color == 1)
 //				{
 //					system("cls");
@@ -82,7 +82,7 @@
 //					cout << "You won " << credits_now * 2 << "." << endl;
 //					credits += credits_now * 2;
 //					cout << "Your credits: " << credits << endl;	
-
+//
 //					game_save.open("save.txt", ios::in | ios::out | ios::app);
 //					if (game_save.good() == true)
 //					{
@@ -105,7 +105,7 @@
 //					cout << "YOU LOST! Correct color is Red. You must try one more time " << player_name << "." << endl;
 //					credits = credits - credits_now;
 //					cout << "Your credits: " << credits << endl;;	
-
+//
 //					game_save.open("save.txt", ios::in | ios::out | ios::app);
 //					if (game_save.good() == true)
 //					{
@@ -232,6 +232,14 @@
 //					}
 //					break;
 //		}break;
+//
+//
+//
+//
+//
+//
+//
+//
 //		case 2:
 //				cout << "WELCOME IN C++ CASINO AGAIN!" << endl;
 //				cout << "Your save's: " << endl;
