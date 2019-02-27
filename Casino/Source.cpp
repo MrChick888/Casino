@@ -3,12 +3,12 @@
 #include <ctime>
 #include <fstream>
 #include <windows.h>
-#include <sstream>
+
 using namespace std;
 
 void main_menu(int& main_menu_navigator);
 void menu_option1(string& player_name, int& credits, int& color, int& credits_played, int& random_number, fstream& save, string& game_name);
-void conditions_color_option(string player_name, int& variable);
+void conditions_variable_option(string player_name, int& variable);
 void conditions_credits_option(string player_name, int credits, int& credits_played);
 void draw_option(int& random_number);
 void conditions_result_option1(string player_name, int& credits, int credits_played, int color, int random_number, fstream& save, string& game_name);
@@ -17,17 +17,26 @@ void lose_option1(string player_name, int& credits, int credits_played, string c
 void p_c();
 void save_option1(fstream& save, string& game_name, string player_name, int credits);
 void reading_from_a_file(string Save[], string Nick[], int Credits[], int &selected_save, string& player_name, int& credits);
-void menu_option2(string player_name, int& credits, int credits_played, int color, int random_number);
-void conditions_result_option2(string player_name, int& credits, int credits_played, int color, int random_number);
-void save_option2(fstream& save, string game_name, string player_name, int credits);
+void menu_option2(string player_name, int& credits, int color, int credits_played, int random_number, fstream& save, string game_name, int &selected_save, string Save[], string Nick[], int Credits[]);
+void conditions_result_option2(string player_name, int& credits, int credits_played, int color, int random_number, string Save[], string Nick[], int Credits[], int& selected_save, string game_name, fstream& save);
+void save_option2(fstream& save, string game_name, string player_name, int credits, string Save[], string Nick[], int Credits[], int selected_save);
+void menu_option3(int& menu_3_navagator);
+void conditions_variable_optionv2(int& variable);
+void chance_option3();
+void prize_option3();
+void end_option3();
+void default_option();
+void end_option4(string end_option);
 
 int main()
 {
-	int main_menu_navigator, credits, color, credits_played = 0, random_number, selected_save;
-	string player_name, game_name;
+	int main_menu_navigator, menu_3_navagator, credits, color, credits_played = 0, random_number, selected_save;
+	string player_name, game_name, end_option;;
 	fstream save;
-	string Save[10], Nick[10];
-	int Credits[10];
+	string Save[4], Nick[4];//dynamika
+	int Credits[4];//dynamika
+	bool whileend = false;
+
 	while (1)
 	{
 		main_menu(main_menu_navigator);
@@ -37,14 +46,28 @@ int main()
 			menu_option1(player_name, credits, color, credits_played, random_number, save, game_name);
 			break;
 		case 2:
-			reading_from_a_file(Save, Nick, Credits, selected_save, player_name, credits);
-			menu_option2(player_name, credits, credits_played, color, random_number);
+			menu_option2(player_name, credits, color, credits_played, random_number, save, game_name, selected_save, Save, Nick, Credits);
 			break;
 		case 3:
-			//kod
-		default: break;
+			while (whileend == false)
+			{
+				menu_option3(menu_3_navagator);
+				switch (menu_3_navagator)
+				{
+				case 1:
+					chance_option3(); whileend = true; break;
+				case 2:
+					prize_option3(); whileend = true; break;
+				case 3:
+					end_option3(); whileend = true; break;
+				default:
+					default_option();
+				}
+			}whileend = false; break;
+		case 4:
+			end_option4(end_option);
+		default: default_option();
 		}
-
 	}
 	system("PAUSE");
 }
@@ -59,13 +82,7 @@ void main_menu(int& main_menu_navigator)
 	cout << "3.Rule section." << endl;
 	cout << "4.END." << endl;
 	cout << "Enter: ";
-	if (!(cin >> main_menu_navigator))
-	{
-		cout << "You can't enter anything other than a number here! " << endl;
-		cout << "Restart program and try again." << endl;
-		system("PAUSE");
-		exit(0);
-	}
+	conditions_variable_optionv2(main_menu_navigator);
 	system("cls");
 	return;
 }
@@ -82,7 +99,7 @@ void menu_option1(string& player_name, int& credits, int& color, int& credits_pl
 	cout << "1.RED" << endl;
 	cout << "2.GREEN" << endl;
 	cout << "3.BLACK" << endl;
-	conditions_color_option(player_name, color);
+	conditions_variable_option(player_name, color);
 	while (color < 1 || color>3)
 	{
 		system("cls");
@@ -91,16 +108,16 @@ void menu_option1(string& player_name, int& credits, int& color, int& credits_pl
 		cout << "1.RED" << endl;
 		cout << "2.GREEN" << endl;
 		cout << "3.BLUE" << endl;
-		conditions_color_option(player_name, color);
+		conditions_variable_option(player_name, color);
 	}
 	cout << "How many credits do you want to play? ";
-	conditions_color_option(player_name, credits_played);
+	conditions_variable_option(player_name, credits_played);
 	conditions_credits_option(player_name, credits, credits_played);
 	draw_option(random_number);
 	conditions_result_option1(player_name, credits, credits_played, color, random_number, save, game_name);
 	return;
 }
-void conditions_color_option(string player_name, int& variable)
+void conditions_variable_option(string player_name, int& variable)
 {
 	if (!(cin >> variable))
 	{
@@ -118,7 +135,7 @@ void conditions_credits_option(string player_name, int credits, int& credits_pla
 		system("cls");
 		cout << player_name << " you have only " << credits << " credits! You can't play for " << credits_played << "!" << endl;
 		cout << "How many credits do you want to play? " << endl;
-		conditions_color_option(player_name, credits_played);
+		conditions_variable_option(player_name, credits_played);
 	}
 	return;
 }
@@ -128,7 +145,7 @@ void draw_option(int& random_number)
 	cout << "The drawing machine begins the countdown." << endl;
 	for (int i = 5; i > -2; i--)
 	{
-		Sleep(500);//1000 to 1 sekunda
+		Sleep(500);
 		system("cls");
 		cout << i;
 	}
@@ -188,12 +205,13 @@ void p_c()
 }
 void save_option1(fstream& save, string& game_name, string player_name, int credits)
 {
-	save.open("save.txt", ios::in | ios::out | ios::app);
+	save.open("save.txt", ios::out | ios::app);
 	if (save.good() == true)
 	{
 		cout << "Save you game. Enter game name: ";
 		cin >> game_name;
 		save << game_name << endl << player_name << endl << credits << endl;
+		cout << "The game saved Successfully." << endl;
 	}
 	else
 	{
@@ -211,20 +229,21 @@ void reading_from_a_file(string Save[], string Nick[], int Credits[], int& selec
 	cout << "Your save's: " << endl;
 	std::ifstream save("save.txt");
 	int i = 0;
-	while (getline(save >> ws, Save[i]) && getline(save, Nick[i]) && save >> Credits[i] && i < 3)
+	while (getline(save >> ws, Save[i]) && getline(save, Nick[i]) && save >> Credits[i] && i < 4)//zamiast 4 dynamika
 	{
 		cout << "[" << i + 1 << "]" << Save[i] << endl;
 		++i;
 	}
-	cout << "Select which save do you want to play: ";
+	cout << "Select which save do you want to play: ";//wywali jak siê da coœ wiecej ni¿ jest savów
 	cin >> selected_save;
 
 	player_name = Nick[selected_save - 1];
 	credits = Credits[selected_save - 1];
 	return;
 }
-void menu_option2(string player_name, int& credits, int credits_played, int color, int random_number)
+void menu_option2(string player_name, int& credits, int color, int credits_played, int random_number, fstream& save, string game_name, int &selected_save, string Save[], string Nick[], int Credits[])
 {
+	reading_from_a_file(Save, Nick, Credits, selected_save, player_name, credits);
 	system("cls");
 	cout << "Good luck and have fun " << player_name << "." << endl;
 	cout << "Your credits: " << credits << endl;
@@ -233,7 +252,7 @@ void menu_option2(string player_name, int& credits, int credits_played, int colo
 	cout << "1.RED" << endl;
 	cout << "2.GREEN" << endl;
 	cout << "3.BLACK" << endl;
-	conditions_color_option(player_name, color);
+	conditions_variable_option(player_name, color);
 	while (color < 1 || color>3)
 	{
 		system("cls");
@@ -242,44 +261,48 @@ void menu_option2(string player_name, int& credits, int credits_played, int colo
 		cout << "1.RED" << endl;
 		cout << "2.GREEN" << endl;
 		cout << "3.BLUE" << endl;
-		conditions_color_option(player_name, color);
+		conditions_variable_option(player_name, color);
 	}
 	cout << "How many credits do you want to play? ";
-	conditions_color_option(player_name, credits_played);
+	conditions_variable_option(player_name, credits_played);
 	conditions_credits_option(player_name, credits, credits_played);
 	draw_option(random_number);
-	conditions_result_option2(player_name, credits, credits_played, color, random_number);
+	conditions_result_option2(player_name, credits, credits_played, color, random_number, Save, Nick, Credits, selected_save, game_name, save);
 	return;
 }
-void conditions_result_option2(string player_name, int& credits, int credits_played, int color, int random_number)
+void conditions_result_option2(string player_name, int& credits, int credits_played, int color, int random_number, string Save[], string Nick[], int Credits[], int& selected_save, string game_name, fstream& save)
 {
 	if (random_number >= 1 && random_number <= 48)
 	{
 		if (color == 1)win_option1(player_name, credits, credits_played, 2);
 		else lose_option1(player_name, credits, credits_played, "Red");
-		//save_option2(save, game_name, player_name, credits);
+		save_option2(save, game_name, player_name, credits, Save, Nick, Credits, selected_save);
 	}
 	if (random_number >= 49 && random_number <= 51)
 	{
 		if (color == 2)win_option1(player_name, credits, credits_played, 14);
 		else lose_option1(player_name, credits, credits_played, "Green");
-		//save_option2(save, game_name, player_name, credits);
+		save_option2(save, game_name, player_name, credits, Save, Nick, Credits, selected_save);
 	}
 	if (random_number >= 52 && random_number <= 99)
 	{
 		if (color == 3)win_option1(player_name, credits, credits_played, 2);
 		else lose_option1(player_name, credits, credits_played, "Black");
-		//save_option2(save, game_name, player_name, credits);
+		save_option2(save, game_name, player_name, credits, Save, Nick, Credits, selected_save);
 	}
 	return;
 }
-void save_option2(fstream& save, string game_name, string player_name, int credits)
+void save_option2(fstream& save, string game_name, string player_name, int credits, string Save[], string Nick[], int Credits[], int selected_save)
 {
-	save.open("save.txt", ios::in | ios::out | ios::app);
+	save.open("save.txt", ios::out | ios::trunc);
+	Credits[selected_save - 1] = credits;
 	if (save.good() == true)
 	{
-		cout << player_name << " you are saving game on save -  " << game_name << "." << endl;
-		//usun¹c i napisaæ now¹ lnie
+		cout << "You are saving game on save - " << Save[selected_save - 1] << "." << endl;
+		for (int i = 0; i < 4; i++)//zamiast 4 dynamika
+		{
+			save << Save[i] << endl << Nick[i] << endl << Credits[i] << endl;
+		}
 	}
 	else
 	{
@@ -289,5 +312,89 @@ void save_option2(fstream& save, string game_name, string player_name, int credi
 	}
 	save.close();
 	p_c();
+	return;
+}
+void menu_option3(int& menu_3_navagator)
+{
+	cout << "WELCOME IN RULE SECTION." << endl;
+	cout << "1.Chance to win." << endl;
+	cout << "2.How much I can win." << endl;
+	cout << "3.Go back to menu." << endl;
+	cout << "Enter: ";
+	conditions_variable_optionv2(menu_3_navagator);
+	system("cls");
+	return;
+}
+void conditions_variable_optionv2(int& variable)
+{
+	if (!(cin >> variable))
+	{
+		cout << "You can't enter anything other than a number here! " << endl;
+		cout << "Restart program and try again." << endl;
+		system("PAUSE");
+		exit(0);
+	}
+	return;
+}
+void chance_option3()
+{
+	cout << "==========" << endl;
+	cout << "==CHANCE==" << endl;
+	cout << "==========" << endl;
+	cout << "If you bet on RED, you have 48,45% chance to win. Tickets - (1-48) " << endl;
+	cout << "If you bet on GREEN, you have 3,10% chance to win. Tickets - (49-51)" << endl;
+	cout << "If you bet on BLACK, you have 48,45% chance to win. Tickets - (52-100)" << endl;
+	p_c();
+	return;
+}
+void prize_option3()
+{
+	cout << "======================" << endl;
+	cout << "==HOW MUCH I CAN WIN==" << endl;
+	cout << "======================" << endl;
+	cout << "If you bet on RED, you can win 2 times more." << endl;
+	cout << "If you bet on GREEN, you can win 14 times more." << endl;
+	cout << "If you bet on BLACK, you can win 2 times more." << endl;
+	p_c();
+	return;
+}
+void end_option3()
+{
+	cout << "So, let's go back to the main menu." << endl;
+	p_c();
+	return;
+}
+void default_option()
+{
+	cout << "THIS OPTION DOESN'T EXIST!" << endl;
+	cout << "Try one more time." << endl;
+	p_c();
+	return;
+}
+void end_option4(string end_option)
+{
+	while (1)
+	{
+		cout << "DO YOU REALLY WANT TO LEAVE THE CASINO?" << endl;
+		cout << "Choose Y/N: ";
+		cin >> end_option;
+		if (end_option == "Y" || end_option == "y")
+		{
+			cout << "SEE YOU SOON." << endl;
+			system("PAUSE");
+			exit(0);
+		}
+		if (end_option == "N" || end_option == "n")
+		{
+			cout << "So, let's go back to the main menu." << endl;
+			p_c(); break;
+		}
+		else
+		{
+			cout << "THIS OPTION DOESN'T EXIST!" << endl;
+			cout << "Try one more time." << endl;
+			p_c();
+		}
+	}
 	return;
 }
