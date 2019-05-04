@@ -34,8 +34,8 @@ int main()
 	int main_menu_navigator, menu_3_navagator, credits, color, credits_played = 0, random_number, selected_save;
 	string player_name, game_name, end_option;;
 	fstream save;
-	string Save[4], Nick[4];//dynamika
-	int Credits[4];//dynamika
+	string Save[100], Nick[100];//dynamika
+	int Credits[100];//dynamika
 	bool whileend = false;
 
 	while (1)
@@ -85,7 +85,6 @@ void main_menu(int& main_menu_navigator)
 	cout << "Enter: ";
 	conditions_variable_optionv2(main_menu_navigator);
 	system("cls");
-	return;
 }
 void menu_option1(string& player_name, int& credits, int& color, int& credits_played, int& random_number, fstream& save, string& game_name)
 {
@@ -230,7 +229,7 @@ void reading_from_a_file(string Save[], string Nick[], int Credits[], int& selec
 	cout << "Your save's: " << endl;
 	std::ifstream save("save.txt");
 	int i = 0;
-	while (getline(save >> ws, Save[i]) && getline(save, Nick[i]) && save >> Credits[i] && i < 4)//zamiast 4 dynamika
+	while (getline(save >> ws, Save[i]) && getline(save, Nick[i]) && save >> Credits[i] && i < 100)//zamiast 4 dynamika
 	{
 		cout << "[" << i + 1 << "]" << Save[i] << endl;
 		++i;

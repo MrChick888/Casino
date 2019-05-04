@@ -10,6 +10,3 @@ Daniel
 save_4
 Filip
 68
-save
-kamil
-55
