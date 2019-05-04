@@ -1,6 +1,6 @@
 Save_1
 Piotr
-10
+12
 Save_2
 Kamil
 70
@@ -10,3 +10,6 @@ Daniel
 save_4
 Filip
 68
+save
+kamil
+55

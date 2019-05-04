@@ -1,32 +1,33 @@
-#include <iostream>
+﻿#include <iostream>
 #include <string>
 #include <ctime>
 #include <fstream>
 #include <windows.h>
+#include <cstdlib>
 
 using namespace std;
 
-void main_menu(int& main_menu_navigator);
-void menu_option1(string& player_name, int& credits, int& color, int& credits_played, int& random_number, fstream& save, string& game_name);
-void conditions_variable_option(string player_name, int& variable);
-void conditions_credits_option(string player_name, int credits, int& credits_played);
-void draw_option(int& random_number);
-void conditions_result_option1(string player_name, int& credits, int credits_played, int color, int random_number, fstream& save, string& game_name);
-void win_option1(string player_name, int& credits, int credits_played, int multiplier);
-void lose_option1(string player_name, int& credits, int credits_played, string correct_color);
-void p_c();
-void save_option1(fstream& save, string& game_name, string player_name, int credits);
-void reading_from_a_file(string Save[], string Nick[], int Credits[], int &selected_save, string& player_name, int& credits);
-void menu_option2(string player_name, int& credits, int color, int credits_played, int random_number, fstream& save, string game_name, int &selected_save, string Save[], string Nick[], int Credits[]);
-void conditions_result_option2(string player_name, int& credits, int credits_played, int color, int random_number, string Save[], string Nick[], int Credits[], int& selected_save, string game_name, fstream& save);
+void main_menu(int& main_menu_navigator);//IDEALNE
+void menu_option1(string& player_name, int& credits, int& color, int& credits_played, int& random_number, fstream& save, string& game_name);//ZA DUŻO
+void conditions_variable_option(string player_name, int& variable);//IDEALNA
+void conditions_credits_option(string player_name, int credits, int& credits_played);//IDEALNA
+void draw_option(int& random_number);//IDEALNA
+void conditions_result_option1(string player_name, int& credits, int credits_played, int color, int random_number, fstream& save, string& game_name);//ZA DUŻO
+void win_option1(string player_name, int& credits, int credits_played, int multiplier);//IDEALNA
+void lose_option1(string player_name, int& credits, int credits_played, string correct_color);//IDEALNA
+void p_c();//IDEALNA
+void save_option1(fstream& save, string& game_name, string player_name, int credits);//IDEALNA
+void reading_from_a_file(string Save[], string Nick[], int Credits[], int &selected_save, string& player_name, int& credits);//ZA DUŻO+TABLICE
+void menu_option2(string player_name, int& credits, int color, int credits_played, int random_number, fstream& save, string game_name, int &selected_save, string Save[], string Nick[], int Credits[]);//ZA DUŻO + TABLICE
+void conditions_result_option2(string player_name, int& credits, int credits_played, int color, int random_number, string Save[], string Nick[], int Credits[], int& selected_save, string game_name, fstream& save);//ZA DUŻO +TABLICE
 void save_option2(fstream& save, string game_name, string player_name, int credits, string Save[], string Nick[], int Credits[], int selected_save);
-void menu_option3(int& menu_3_navagator);
-void conditions_variable_optionv2(int& variable);
-void chance_option3();
-void prize_option3();
-void end_option3();
-void default_option();
-void end_option4(string end_option);
+void menu_option3(int& menu_3_navagator);//IDEALNA
+void conditions_variable_optionv2(int& variable);//IDEALNA
+void chance_option3();//IDEALNA
+void prize_option3();//IDEALNA
+void end_option3();//IDEALNA
+void default_option();//IDEALNA
+void end_option4(string end_option);//IDEALNA
 
 int main()
 {
@@ -130,7 +131,7 @@ void conditions_variable_option(string player_name, int& variable)
 }
 void conditions_credits_option(string player_name, int credits, int& credits_played)
 {
-	while (credits < credits_played || credits_played <= 0)//mo�na lepiej na dwa przypadki
+	while (credits < credits_played || credits_played <= 0)//mo¿na lepiej na dwa przypadki
 	{
 		system("cls");
 		cout << player_name << " you have only " << credits << " credits! You can't play for " << credits_played << "!" << endl;
@@ -234,7 +235,7 @@ void reading_from_a_file(string Save[], string Nick[], int Credits[], int& selec
 		cout << "[" << i + 1 << "]" << Save[i] << endl;
 		++i;
 	}
-	cout << "Select which save do you want to play: ";//wywali jak si� da co� wiecej ni� jest sav�w
+	cout << "Select which save do you want to play: ";//wywali jak siê da co wiecej ni¿ jest savów
 	cin >> selected_save;
 
 	player_name = Nick[selected_save - 1];
